@@ -76,26 +76,27 @@ public class DepartmentService : IDepartmentService
         {
             return null;
         }
+        department.Name = departmentDto.Name;
+        department.Description = departmentDto.Description;
 
-        var data = new CreateDepartmentDto
-        {
-            Id = Guid.NewGuid(),
-            Name = departmentDto.Name,
-            Description = departmentDto.Description
-        };
+        //var data = new CreateDepartmentDto
+        //{
+        //    Id = Guid.NewGuid(),
+        //    Name = departmentDto.Name,
+        //    Description = departmentDto.Description
+        //};
 
-        department = data.ToModel();
+        //department = data.ToModel();
 
         try
         {
-            await _context.Departments.AddAsync(department);
+            _context.Departments.Update(department);
             await _context.SaveChangesAsync();
-
             return department.ToDto();
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred while creating the department.", ex);
+            Console.WriteLine($"An error occurred while creating the department: {ex.Message}");
             return new DepartmentDto();
         }
     }

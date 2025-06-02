@@ -87,29 +87,44 @@ public class DepartmentController : BaseController
         return View(departmentDTO);
     }
 
-    [HttpPut]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> EditAsync(Guid id, UpdateDepartmentModel updateModel)
     {
+        if (!ModelState.IsValid)
+        {
+            TempData["ErrorMessage"] = "Department not found";
+            return View(updateModel);
+        }
         var departmentDTO = new DepartmentDto()
         {
             Id = id,
             Name = updateModel.Name,
             Description = updateModel.Description,
         };
-        var department = _departmentService.GetDepartmentByIdAsync(id);
-        if (!ModelState.IsValid)
+
+        var result = await _departmentService.UpdateDepartmentAsync(departmentDTO);
+        if (result is null)
         {
-            await _departmentService.UpdateDepartmentAsync(departmentDTO);
+            TempData["ErrorMessage"] = "Department not found";
+            return View(updateModel);
         }
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
+
+        TempData["ErrorMessage"] = "Department updated successfully";
+        return Redirect(nameof(Index));
+        //var department = _departmentService.GetDepartmentByIdAsync(id);
+        //if (!ModelState.IsValid)
+        //{
+        //    await _departmentService.UpdateDepartmentAsync(departmentDTO);
+        //}
+        //try
+        //{
+        //    return RedirectToAction(nameof(Index));
+        //}
+        //catch
+        //{
+        //    return View();
+        //}
     }
 
     public ActionResult Delete(int id)
