@@ -84,16 +84,17 @@ public class DepartmentController : BaseController
             Name = department.Name,
             Description = department.Description,
         };
+        ViewData["Title"] = "Edit Department Record";
         return View(departmentDTO);
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> EditAsync(Guid id, UpdateDepartmentModel updateModel)
+    public async Task<ActionResult> Edit([FromRoute]Guid id, UpdateDepartmentModel updateModel)
     {
+       
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = "Department not found";
+            TempData["ErrorMessage"] = "Please fill all fields correctly";
             return View(updateModel);
         }
         var departmentDTO = new DepartmentDto()
@@ -106,25 +107,12 @@ public class DepartmentController : BaseController
         var result = await _departmentService.UpdateDepartmentAsync(departmentDTO);
         if (result is null)
         {
-            TempData["ErrorMessage"] = "Department not found";
+            TempData["ErrorMessage"] = "Failed to update department!!";
             return View(updateModel);
         }
 
         TempData["ErrorMessage"] = "Department updated successfully";
-        return Redirect(nameof(Index));
-        //var department = _departmentService.GetDepartmentByIdAsync(id);
-        //if (!ModelState.IsValid)
-        //{
-        //    await _departmentService.UpdateDepartmentAsync(departmentDTO);
-        //}
-        //try
-        //{
-        //    return RedirectToAction(nameof(Index));
-        //}
-        //catch
-        //{
-        //    return View();
-        //}
+        return RedirectToAction("Index");
     }
 
     public ActionResult Delete(int id)
