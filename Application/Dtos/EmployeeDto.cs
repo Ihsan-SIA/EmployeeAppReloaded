@@ -4,7 +4,7 @@ namespace Application.Dtos;
 
 public class EmployeeDto
 {
-    public int Id { get; set; }
+    public Guid EmployeeId { get; set; }
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
     public string Email { get; set; } = default!;
@@ -20,6 +20,7 @@ public class  EmployeesDto
 
 public class  CreateEmployeeDto
 {
+    public Guid EmployeeId { get; set; }
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
     public string Email { get; set; } = default!;
