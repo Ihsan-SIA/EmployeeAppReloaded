@@ -1,0 +1,29 @@
+﻿@model DepartmentViewModel
+@{
+    ViewData["Title"] = $"{Model.Name} details";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+
+<table class="table table-primary">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>@Model.Name</td>
+            <td>@Model.Description</td>
+            <td>
+                <a asp-action="Edit" class="btn btn-primary">Edit</a>
+                <a asp-action="Delete" class="btn btn-primary">Delete</a>
+            </td>
+        </trs>
+    </tbody>
+</table>

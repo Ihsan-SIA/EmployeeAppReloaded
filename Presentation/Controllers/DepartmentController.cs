@@ -30,9 +30,22 @@ public class DepartmentController : BaseController
         return View(viewModel);
     }
 
-    public ActionResult Details(int id)
+    [HttpGet]
+    public async Task<ActionResult> Detail(Guid id)
     {
-        return View();
+        var department = await _departmentService.GetDepartmentByIdAsync(id);
+        if (department is null)
+        {
+            SetFlashMessage("Department does not exist", "error");
+            return RedirectToAction("Index");
+        }
+        var details = new DepartmentViewModel()
+        {
+            Id = department.Id,
+            Name = department.Name,
+            Description = department.Description
+        };
+        return View(details);
     }
 
     public ActionResult Create()
@@ -42,9 +55,9 @@ public class DepartmentController : BaseController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateDepartmentViewModel model)
+    public async Task<IActionResult> Create(Guid id, CreateDepartmentViewModel model)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             SetFlashMessage("Please fill in all required fields correctly.", "error");
             return View(model);
@@ -56,12 +69,10 @@ public class DepartmentController : BaseController
             Name = model.Name,
             Description = model.Description
         };
-
         var result = await _departmentService.CreateDepartmentAsync(viewModel);
-
         if (result == null)
         {
-            SetFlashMessage("An error occurred while creating the department. Please try again.", "error");
+            SetFlashMessage("An error occurred while creating the department. Please check if there's any problem or department already exist and try again.", "error");
             return View(model);
         }
 
@@ -91,7 +102,6 @@ public class DepartmentController : BaseController
     [HttpPost]
     public async Task<ActionResult> Edit([FromRoute]Guid id, UpdateDepartmentModel updateModel)
     {
-       
         if (!ModelState.IsValid)
         {
             TempData["ErrorMessage"] = "Please fill all fields correctly";
@@ -115,18 +125,15 @@ public class DepartmentController : BaseController
         return RedirectToAction("Index");
     }
 
-    public ActionResult Delete(int id)
-    {
-        return View();
-    }
-
     // POST: DepartmentController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
+    public ActionResult Delete(Guid id)
     {
         try
         {
+            var department = _departmentService.DeleteDepartmentAsync(id);
+            TempData["Message"] = "Department deleted successfully!";
             return RedirectToAction(nameof(Index));
         }
         catch

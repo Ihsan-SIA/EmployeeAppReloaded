@@ -4,6 +4,8 @@ using Data.Context;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using MySqlX.XDevAPI.Common;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Services.Department;
 
@@ -24,9 +26,13 @@ public class DepartmentService : IDepartmentService
             Name = dto.Name,
             Description = dto.Description
         };
-
+        var checkDepartment = _context.Departments.FirstOrDefault(x => x.Name.ToLower() == dto.Name.ToLower());
+        if (checkDepartment is not null)
+        {
+            return null;
+        }
         var department = data.ToModel();
-
+        
         try
         {
             await _context.Departments.AddAsync(department);
@@ -34,16 +40,22 @@ public class DepartmentService : IDepartmentService
 
             return department.ToDto();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine("An error occurred while creating the department.", ex);
             return new DepartmentDto();
         }
     }
 
-    public Task DeleteDepartmentAsync(Guid departmentId)
+    public async Task DeleteDepartmentAsync(Guid departmentId)
     {
-        throw new NotImplementedException();
+        var department = _context.Departments.FirstOrDefault(x=> x.Id == departmentId);
+        if (department is not null)
+        {
+            _context.Departments.Remove(department);
+            await _context.SaveChangesAsync();
+        }
+
     }
 
     public async Task<DepartmentsDto> GetAllDepartmentsAsync()
@@ -78,15 +90,6 @@ public class DepartmentService : IDepartmentService
         }
         department.Name = departmentDto.Name;
         department.Description = departmentDto.Description;
-
-        //var data = new CreateDepartmentDto
-        //{
-        //    Id = Guid.NewGuid(),
-        //    Name = departmentDto.Name,
-        //    Description = departmentDto.Description
-        //};
-
-        //department = data.ToModel();
 
         try
         {
