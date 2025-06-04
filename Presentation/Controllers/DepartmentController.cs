@@ -125,16 +125,16 @@ public class DepartmentController : BaseController
         return RedirectToAction("Index");
     }
 
-    // POST: DepartmentController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Delete(Guid id)
     {
+        var allDepartments = _departmentService.GetAllDepartmentsAsync();
         try
         {
             var department = _departmentService.DeleteDepartmentAsync(id);
             TempData["Message"] = "Department deleted successfully!";
-            return RedirectToAction(nameof(Index));
+            return View(allDepartments);
         }
         catch
         {

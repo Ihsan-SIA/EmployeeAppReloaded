@@ -1,4 +1,6 @@
-﻿namespace Application.Dtos;
+﻿using Application.Services.Employee;
+
+namespace Application.Dtos;
 
 public class EmployeeDto
 {
