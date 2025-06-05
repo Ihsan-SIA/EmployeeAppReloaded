@@ -20,7 +20,7 @@ namespace Presentation.Controllers
             {
                 return View(employees);
             }
-            //var viewModel = employees.ToViewModel();
+            var viewModel = employees.ToViewModel();
             return View(viewModel);
         }
     }
