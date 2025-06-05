@@ -22,8 +22,9 @@
             <td>@Model.Description</td>
             <td>
                 <a asp-action="Edit" class="btn btn-primary">Edit</a>
-                <a asp-action="Delete" class="btn btn-primary">Delete</a>
+                <a asp-action="Detail" class="btn btn-primary">Detail</a>
+                <a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Add" class="btn btn-primary">Add</a>
             </td>
-        </trs>
+        </tr>
     </tbody>
 </table>
