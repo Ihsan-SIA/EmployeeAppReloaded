@@ -7,7 +7,7 @@
 <hr>
 
 <form asp-action="Create" asp-controller="Employee" method="post">
-
+    <input type="hidden" asp-for="DepartmentId" />
     <div class="mb-3">
         <label asp-for="FirstName" class="form-label"></label>
         <input asp-for="FirstName" class="form-control" />
