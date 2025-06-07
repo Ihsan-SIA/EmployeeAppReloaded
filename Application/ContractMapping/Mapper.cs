@@ -10,7 +10,7 @@ public static class Mapper
 
         return new EmployeeDto()
         {
-            EmployeeId = employee.Id,
+            EmployeeId = employee.EmployeeId,
             FirstName = employee.FirstName,
             LastName = employee.LastName,
             Email = employee.Email,
@@ -34,7 +34,7 @@ public static class Mapper
         if (createEmployeeDto == null) return null!;
         return new Employee()
         {
-            Id = createEmployeeDto.EmployeeId,
+            EmployeeId = createEmployeeDto.EmployeeId,
             FirstName = createEmployeeDto.FirstName,
             LastName = createEmployeeDto.LastName,
             Email = createEmployeeDto.Email,

@@ -19,7 +19,7 @@ namespace Application.Services.Employee
         }
         public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto createEmployeeDto)
         {
-            var checkEmployee = _context.Employees.FirstOrDefault(x => x.Id == createEmployeeDto.EmployeeId);
+            var checkEmployee = _context.Employees.FirstOrDefault(x => x.EmployeeId == createEmployeeDto.EmployeeId);
             if (checkEmployee is not null)
             {
                 return null;
@@ -63,14 +63,14 @@ namespace Application.Services.Employee
 
         public async Task<EmployeeDto> GetByIdAsync(Guid employeeId)
         {
-            var employees = await _context.Employees.FirstOrDefaultAsync(x => x.Id == employeeId);
+            var employees = await _context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
             if (employees is null)
             {
                 return null;
             }
             var employeeDto = new EmployeeDto()
             {
-                EmployeeId = employees.Id,
+                EmployeeId = employees.EmployeeId,
                 FirstName = employees.FirstName,
                 LastName = employees.LastName,
                 Email = employees.Email,
@@ -80,9 +80,30 @@ namespace Application.Services.Employee
             return employeeDto;
         }
 
-        public Task<EmployeeDto> UpdateEmployeeAsync(EmployeeDto employeeDto)
+        public async Task<EmployeeDto> UpdateEmployeeAsync(EmployeeDto employeeDto)
         {
-            throw new NotImplementedException();
+            var employee = await _context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeDto.EmployeeId);
+            if (employee is null)
+            {
+                return null;
+            }
+
+            employee.FirstName = employeeDto.FirstName;
+            employee.LastName = employeeDto.LastName;
+            employee.Email = employeeDto.Email;
+            employee.HireDate = employeeDto.HireDate;
+            employee.Salary = employeeDto.Salary;
+            try
+            {
+                _context.Employees.Update(employee);
+                await _context.SaveChangesAsync();
+                return employee.ToDto();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while creating the department: {ex.Message}");
+                return new EmployeeDto();
+            }
         }
     }
 }
