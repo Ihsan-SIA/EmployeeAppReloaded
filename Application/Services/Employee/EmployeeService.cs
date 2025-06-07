@@ -1,6 +1,7 @@
 ﻿using Application.ContractMapping;
 using Application.Dtos;
 using Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,17 +51,33 @@ namespace Application.Services.Employee
 
         public Task<EmployeeDto> DeleteEmployeeAsync(Guid employeeId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return null;
         }
 
-        public Task<EmployeesDto> GetAllEmployeesAsync()
+        public async Task<EmployeesDto> GetAllEmployeesAsync()
         {
-            throw new NotImplementedException();
+            var employees = await _context.Employees.ToListAsync();
+            return employees.EmployeesDto();
         }
 
-        public Task<EmployeeDto> GetByIdAsync(Guid employeeId)
+        public async Task<EmployeeDto> GetByIdAsync(Guid employeeId)
         {
-            throw new NotImplementedException();
+            var employees = await _context.Employees.FirstOrDefaultAsync(x => x.Id == employeeId);
+            if (employees is null)
+            {
+                return null;
+            }
+            var employeeDto = new EmployeeDto()
+            {
+                EmployeeId = employees.Id,
+                FirstName = employees.FirstName,
+                LastName = employees.LastName,
+                Email = employees.Email,
+                Salary = employees.Salary,
+                HireDate = employees.HireDate,
+            };
+            return employeeDto;
         }
 
         public Task<EmployeeDto> UpdateEmployeeAsync(EmployeeDto employeeDto)
