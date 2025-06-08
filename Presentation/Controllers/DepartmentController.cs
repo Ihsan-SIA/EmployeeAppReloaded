@@ -30,29 +30,6 @@ public class DepartmentController : BaseController
         return View(viewModel);
     }
 
-    [HttpGet]
-    public async Task<ActionResult> Detail(Guid id)
-    {
-        var department = await _departmentService.GetDepartmentByIdAsync(id);
-        if (department is null)
-        {
-            SetFlashMessage("Department does not exist", "error");
-            return RedirectToAction("Index");
-        }
-        var details = new DepartmentViewModel()
-        {
-            Id = department.Id,
-            Name = department.Name,
-            Description = department.Description
-        };
-        return View(details);
-    }
-
-    public ActionResult Create()
-    {
-        return View();
-    }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Guid id, CreateDepartmentViewModel model)
@@ -80,6 +57,31 @@ public class DepartmentController : BaseController
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet]
+    public async Task<ActionResult> Detail(Guid id)
+    {
+        var department = await _departmentService.GetDepartmentByIdAsync(id);
+        if (department is null)
+        {
+            SetFlashMessage("Department does not exist", "error");
+            return RedirectToAction("Index");
+        }
+        var details = new DepartmentViewModel()
+        {
+            Id = department.Id,
+            Name = department.Name,
+            Description = department.Description
+        };
+        return View(details);
+    }
+
+    public ActionResult Create()
+    {
+        return View();
+    }
+
+    
 
     [HttpGet]
     public async Task<ActionResult> Edit(Guid id)

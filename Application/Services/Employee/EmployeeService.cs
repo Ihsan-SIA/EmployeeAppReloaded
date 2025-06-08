@@ -19,7 +19,7 @@ namespace Application.Services.Employee
         }
         public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto createEmployeeDto)
         {
-            var checkEmployee = _context.Employees.FirstOrDefault(x => x.EmployeeId == createEmployeeDto.EmployeeId);
+            var checkEmployee = _context.Employees.FirstOrDefault(x => x.Id == createEmployeeDto.EmployeeId);
             if (checkEmployee is not null)
             {
                 return null;
@@ -51,7 +51,6 @@ namespace Application.Services.Employee
 
         public Task<EmployeeDto> DeleteEmployeeAsync(Guid employeeId)
         {
-            //throw new NotImplementedException();
             return null;
         }
 
@@ -63,14 +62,14 @@ namespace Application.Services.Employee
 
         public async Task<EmployeeDto> GetByIdAsync(Guid employeeId)
         {
-            var employees = await _context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+            var employees = await _context.Employees.FirstOrDefaultAsync(x => x.Id == employeeId);
             if (employees is null)
             {
                 return null;
             }
             var employeeDto = new EmployeeDto()
             {
-                EmployeeId = employees.EmployeeId,
+                EmployeeId = employees.Id,
                 FirstName = employees.FirstName,
                 LastName = employees.LastName,
                 Email = employees.Email,
@@ -82,7 +81,7 @@ namespace Application.Services.Employee
 
         public async Task<EmployeeDto> UpdateEmployeeAsync(EmployeeDto employeeDto)
         {
-            var employee = await _context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeDto.EmployeeId);
+            var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == employeeDto.EmployeeId);
             if (employee is null)
             {
                 return null;

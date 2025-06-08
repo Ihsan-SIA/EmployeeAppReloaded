@@ -2,7 +2,7 @@ namespace Data.Model;
 
 public class Employee
 {
-    public Guid EmployeeId { get; set; }
+    public Guid Id { get; set; }
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
     public string Email { get; set; } = default!;

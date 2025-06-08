@@ -1,0 +1,50 @@
+﻿@model EmployeesViewModel
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a asp-action="Create" class="btn btn-outline-success">Create New Employee</a>
+<hr>
+
+@if (Model is null)
+{
+    <p class="text-danger">No records available!</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Employees)
+            {
+                <tr>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@item.Salary</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="" asp-route-id="" class="btn btn-outline-primary btn-sm">View</a>
+                            <a asp-action="" asp-route-id="" class="btn btn-outline-secondary btn-sm">Edit</a>
+                            <form asp-action="Delete" asp-route-id="" method="post"
+                                  onsubmit="return confirm('Are you sure?');">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
