@@ -30,6 +30,11 @@ public class DepartmentController : BaseController
         return View(viewModel);
     }
 
+    public ActionResult Create()
+    {
+        return View();
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Guid id, CreateDepartmentViewModel model)
@@ -57,31 +62,6 @@ public class DepartmentController : BaseController
 
         return RedirectToAction(nameof(Index));
     }
-
-    [HttpGet]
-    public async Task<ActionResult> Detail(Guid id)
-    {
-        var department = await _departmentService.GetDepartmentByIdAsync(id);
-        if (department is null)
-        {
-            SetFlashMessage("Department does not exist", "error");
-            return RedirectToAction("Index");
-        }
-        var details = new DepartmentViewModel()
-        {
-            Id = department.Id,
-            Name = department.Name,
-            Description = department.Description
-        };
-        return View(details);
-    }
-
-    public ActionResult Create()
-    {
-        return View();
-    }
-
-    
 
     [HttpGet]
     public async Task<ActionResult> Edit(Guid id)
@@ -127,20 +107,30 @@ public class DepartmentController : BaseController
         return RedirectToAction("Index");
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Detail(Guid departmentId)
+    {
+        var departments = _departmentService.GetDepartmentByIdAsync(departmentId);
+        if (departments == null)
+        {
+            return View();
+        }
+        return 
+    }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(Guid id)
+    public async Task<ActionResult> Delete(Guid id)
     {
-        var allDepartments = _departmentService.GetAllDepartmentsAsync();
+        var allDepartments = await _departmentService.GetAllDepartmentsAsync();
         try
         {
             var department = _departmentService.DeleteDepartmentAsync(id);
             TempData["Message"] = "Department deleted successfully!";
-            return View(allDepartments);
+            return RedirectToAction("Index");
         }
         catch
         {
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

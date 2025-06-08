@@ -49,9 +49,14 @@ namespace Application.Services.Employee
             }
         }
 
-        public Task<EmployeeDto> DeleteEmployeeAsync(Guid employeeId)
+        public async Task DeleteEmployeeAsync(Guid employeeId)
         {
-            return null;
+            var employee = _context.Employees.FirstOrDefault(x => x.Id == employeeId);
+            if (employee is not null)
+            {
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<EmployeesDto> GetAllEmployeesAsync()

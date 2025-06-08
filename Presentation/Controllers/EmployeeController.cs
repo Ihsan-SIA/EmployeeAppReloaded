@@ -62,5 +62,20 @@ namespace Presentation.Controllers
             var allEmployees = await _employeeService.GetAllEmployeesAsync();
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid employeeId)
+        {
+            var allEmployees = await _employeeService.GetAllEmployeesAsync();
+            try
+            {
+                var employee = _employeeService.DeleteEmployeeAsync(employeeId);
+                TempData["Message"] = "Department deleted successfully!";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

@@ -55,7 +55,6 @@
                 _context.Departments.Remove(department);
                 await _context.SaveChangesAsync();
             }
-
         }
 
         public async Task<DepartmentsDto> GetAllDepartmentsAsync()
