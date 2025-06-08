@@ -110,12 +110,14 @@ public class DepartmentController : BaseController
     [HttpGet]
     public async Task<IActionResult> Detail(Guid departmentId)
     {
-        var departments = _departmentService.GetDepartmentByIdAsync(departmentId);
+        var departments = await _departmentService.GetDepartmentByIdAsync(departmentId);
         if (departments == null)
         {
-            return View();
+            return View(departments);
         }
-        return 
+
+        var viewModel = departments.ToViewModel();
+        return View(viewModel);
     }
     [HttpPost]
     [ValidateAntiForgeryToken]

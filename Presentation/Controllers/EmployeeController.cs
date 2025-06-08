@@ -69,13 +69,22 @@ namespace Presentation.Controllers
             try
             {
                 var employee = _employeeService.DeleteEmployeeAsync(employeeId);
-                TempData["Message"] = "Department deleted successfully!";
-                return RedirectToAction("Index");
+                TempData["Message"] = "Employee deleted successfully!";
+                return View(allEmployees);
             }
             catch
             {
                 return RedirectToAction("Index");
             }
+        }
+        public async Task<IActionResult> Detail()
+        {
+            var employees = await _employeeService.GetAllEmployeesAsync();
+            if (employees == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(employees);
         }
     }
 }
