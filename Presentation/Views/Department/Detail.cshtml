@@ -5,29 +5,35 @@
 
 <h1>@ViewData["Title"]</h1>
 <hr />
+<a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a>
 
 @if (Model.Employees is not null && Model.Employees.Any())
 {
-<table class="table table-primary">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Salary</th>
-        </tr>
-    </thead>
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        
-        <tr>
-            <td>@Model.Name</td>
-            <td>@Model.Description</td>
-            <td>
-                <a asp-action="Edit" class="btn btn-primary">Edit</a>
-                <a asp-action="Detail" asp-route-id="@Model.Id" class="btn btn-primary">Detail</a>
-                <a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <tbody>
+
+            @foreach (var employees in Model.Employees)
+            {
+                <tr>
+                    <td>@employees.FirstName @employees.LastName</td>
+                    <td>$"{@employees.Salary:F2}"</td>
+                    <td>@employees.Email</td>
+                </tr>
+            }
+            @* <a asp-action="Edit" class="btn btn-primary">Edit</a>
+            <a asp-action="Detail" asp-route-id="@Model.Id" class="btn btn-primary">Detail</a>
+            <a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a> *@
+    </table>
+}
+else
+{
+    <p>No employees available in this department</p>
 }

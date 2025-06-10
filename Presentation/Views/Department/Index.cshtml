@@ -30,7 +30,7 @@ else
                     <td>@item.Name</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Detail</a>
+                            <a asp-controller="Employee" asp-action="Index" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Detail</a>
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">Edit</a>
                             <form asp-action="Delete" asp-route-id="@item.Id" method="post"
                                   onsubmit="return confirm('Are you sure?');">

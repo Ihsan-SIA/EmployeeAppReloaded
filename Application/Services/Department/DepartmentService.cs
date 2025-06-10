@@ -13,7 +13,7 @@ public class DepartmentService : IDepartmentService
 {
     private readonly EmployeeAppDbContext _context;
 
-    public DepartmentService(EmployeeAppDbContext context
+    public DepartmentService(EmployeeAppDbContext context)
     {
         _context = context;
     }
