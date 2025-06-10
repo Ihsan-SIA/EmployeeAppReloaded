@@ -132,7 +132,7 @@ public class DepartmentController : BaseController
         }
         catch
         {
-            return RedirectToAction("Index");
+            return View(allDepartments);
         }
     }
 }

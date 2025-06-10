@@ -6,17 +6,19 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 
-
+@if (Model.Employees is not null && Model.Employees.Any())
+{
 <table class="table table-primary">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
-            <th>Action</th>
+            <th>Email</th>
+            <th>Salary</th>
         </tr>
     </thead>
 
     <tbody>
+        
         <tr>
             <td>@Model.Name</td>
             <td>@Model.Description</td>
@@ -28,3 +30,4 @@
         </tr>
     </tbody>
 </table>
+}
