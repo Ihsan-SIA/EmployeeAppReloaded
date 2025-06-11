@@ -13,7 +13,7 @@ public static class Mapperly
             LastName = model.LastName,
             Email = model.Email,
             HireDate = model.HireDate,
-            Salary = model.Salary,
+            Salary = decimal.Parse(model.Salary),
             DepartmentId = model.DepartmentId,
         };
     }
@@ -36,7 +36,7 @@ public static class Mapperly
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
-            Salary = model.Salary,
+            Salary = $"{model.Salary:F2}",
             HireDate = model.HireDate,
             DepartmentId= model.DepartmentId,
         };

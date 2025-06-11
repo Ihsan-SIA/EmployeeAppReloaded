@@ -15,7 +15,7 @@ public static class Mapper
             LastName = employee.LastName,
             Email = employee.Email,
             HireDate = employee.HireDate,
-            Salary = employee.Salary,
+            Salary = $"{employee.Salary:N2}",
             DepartmentId = employee.DepartmentId,
         };
     }

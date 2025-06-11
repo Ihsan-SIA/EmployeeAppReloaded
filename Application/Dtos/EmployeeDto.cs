@@ -9,7 +9,7 @@ public class EmployeeDto
     public string LastName { get; set; } = default!;
     public string Email { get; set; } = default!;
     public DateTime HireDate { get; set; }
-    public decimal Salary { get; set; }
+    public string Salary { get; set; } = default!;
     public Guid DepartmentId { get; set; } = default!;
     //public string? DepartmentName { get; set; }
 }

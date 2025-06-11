@@ -86,7 +86,7 @@ public class DepartmentService : IDepartmentService
                 LastName = x.LastName,
                 Email = x.Email,
                 HireDate = x.HireDate,
-                Salary = x.Salary
+                Salary = $"{x.Salary:N2}"
             }).ToList()
         };
     }
