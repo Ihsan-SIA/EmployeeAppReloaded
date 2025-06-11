@@ -25,11 +25,11 @@ namespace Presentation.Controllers
             return View(viewModel);
         }
         [HttpGet]
-        public IActionResult Create(Guid id)
+        public IActionResult Create(Guid departmentId)
         {
             var model = new CreateEmployeeModel()
             {
-                DepartmentId = id
+                DepartmentId = departmentId
             };
             return View(model);
 

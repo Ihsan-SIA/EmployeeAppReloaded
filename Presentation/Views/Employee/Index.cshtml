@@ -5,7 +5,8 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<a asp-action="Create" class="btn btn-outline-success">Create New Employee</a>
+<a asp-controller="Employee" asp-action="Create" asp-route-departmentId="@Model.DepartmentId" class="btn btn-outline-success">Create New Employee</a>
+<a asp-controller="Department" asp-action="Index" class="btn btn-outline-info">Back to departments</a>
 <hr>
 
 @if (Model is null)
@@ -29,7 +30,7 @@ else
             {
                 <tr>
                     <td>@item.FirstName @item.LastName</td>
-                    <td>@item.Salary</td>
+                    <td>@item.Salary"</td>
                     <td>@item.Email</td>
                     <td>
                         <div class="btn-group" role="group">

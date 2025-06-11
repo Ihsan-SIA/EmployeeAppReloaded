@@ -2,10 +2,9 @@
 @{
     ViewData["Title"] = $"{Model.Name} details";
 }
-
 <h1>@ViewData["Title"]</h1>
 <hr />
-<a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a>
+<a asp-controller="Employee" asp-route-departmentId="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a>
 
 @if (Model.Employees is not null && Model.Employees.Any())
 {
@@ -24,8 +23,8 @@
             {
                 <tr>
                     <td>@employees.FirstName @employees.LastName</td>
-                    <td>$"{@employees.Salary:F2}"</td>
                     <td>@employees.Email</td>
+                    <td>@employees.Salary</td>
                 </tr>
             }
             @* <a asp-action="Edit" class="btn btn-primary">Edit</a>
@@ -35,5 +34,5 @@
 }
 else
 {
-    <p>No employees available in this department</p>
+    <p class="text-info">No employees available in this department</p>
 }

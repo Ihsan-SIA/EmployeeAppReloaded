@@ -24,7 +24,9 @@ public static class Mapperly
         {
             Id = dto.Id,
             Name = dto.Name,
-            Description = dto.Description
+            Description = dto.Description,
+            Employees = dto.Employees?
+            .Select(e => e.ToViewModel()).ToList() ?? new List<EmployeeViewModel>()
         };
     }
     public static EmployeeDto ToDto(this EmployeeViewModel model)
