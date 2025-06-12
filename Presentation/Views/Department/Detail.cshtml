@@ -13,7 +13,8 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Salary</th>
+                <th>Salary (₦)</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -25,10 +26,10 @@
                     <td>@employees.FirstName @employees.LastName</td>
                     <td>@employees.Email</td>
                     <td>@employees.Salary</td>
+                    <td><a asp-controller="Employee" asp-action="Detail" asp-route-employeeId="@employees.EmployeeId" class="btn btn-outline-primary">View Employee</a></td>
                 </tr>
             }
             @* <a asp-action="Edit" class="btn btn-primary">Edit</a>
-            <a asp-action="Detail" asp-route-id="@Model.Id" class="btn btn-primary">Detail</a>
             <a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a> *@
     </table>
 }

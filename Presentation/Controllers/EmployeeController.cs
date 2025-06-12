@@ -1,8 +1,10 @@
 ﻿using Application.Dtos;
+using Application.Services.Employee;
+using Data.Model;
+using Microsoft.AspNetCore.Mvc;
 using Presentation.DtoMapping;
 using Presentation.Models;
-using Application.Services.Employee;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
@@ -31,6 +33,7 @@ namespace Presentation.Controllers
             {
                 DepartmentId = departmentId
             };
+            
             return View(model);
 
         }
@@ -45,6 +48,7 @@ namespace Presentation.Controllers
             }
             var employeeModel = new CreateEmployeeDto()
             {
+                EmployeeId = employee.EmployeeId,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Email = employee.Email,
@@ -62,6 +66,59 @@ namespace Presentation.Controllers
             var allEmployees = await _employeeService.GetAllEmployeesAsync();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid employeeId)
+        {
+            var employee = await _employeeService.GetEmployeeByIdAsync(employeeId);
+            if (employee is null)
+            {
+                TempData["Message"] = "Employee not found!";
+                return RedirectToAction("Index");
+            }
+
+            var employeeDto = new UpdateEmployeeModel()
+            {
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Email = employee.Email,
+                Salary = $"{employee.Salary:N2}",
+                HireDate = employee.HireDate,
+            };
+            ViewData["Title"] = "Update Employee details";
+            return View(employeeDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Guid employeeId, UpdateEmployeeModel updateEmployeeModel)
+        {
+            var employee = await _employeeService.GetEmployeeByIdAsync(employeeId);
+            if (employee is null)
+            {
+                TempData["Message"] = "Employee not found!";
+                return View(updateEmployeeModel);
+            }
+
+            var employeeDto = new EmployeeDto()
+            {
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Email = employee.Email,
+                Salary = employee.Salary,
+                HireDate = employee.HireDate,
+            };
+
+            var result = await _employeeService.UpdateEmployeeAsync(employeeDto);
+            if (result is null)
+            {
+                TempData["Message"] = "Failed to update employee details!";
+                return View(updateEmployeeModel);
+            }
+
+            TempData["Message"] = "Failed to update employee details!";
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Delete(Guid employeeId)
         {
@@ -70,21 +127,25 @@ namespace Presentation.Controllers
             {
                 var employee = _employeeService.DeleteEmployeeAsync(employeeId);
                 TempData["Message"] = "Employee deleted successfully!";
-                return View(allEmployees);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return RedirectToAction("Index");
+                return View(allEmployees);
             }
         }
-        public async Task<IActionResult> Detail()
+        
+        public async Task<IActionResult> Detail(Guid employeeId)
         {
-            var employees = await _employeeService.GetAllEmployeesAsync();
+            var employees = await _employeeService.GetEmployeeByIdAsync(employeeId);
             if (employees == null)
             {
+                SetFlashMessage("Unable to view employee!", "error");
                 return RedirectToAction("Index");
             }
-            return View(employees);
+
+            var employeeModel = employees.ToViewModel();
+            return View(employeeModel);
         }
     }
 }

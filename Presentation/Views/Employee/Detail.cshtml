@@ -1,0 +1,35 @@
+﻿@model EmployeeViewModel
+@{
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName} details";
+}
+
+<h1>@ViewData["Title"]</h1>
+<a asp-action="Update" asp-route-employeeId="@Model.EmployeeId" class="btn btn-outline-primary">Update employee details</a>
+<hr />
+
+<table class="table table-striped table-light">
+    <tr>
+        <td>Name</td>
+        <td>@Model.FirstName @Model.LastName</td>
+    </tr>
+
+    <tr>
+        <td>Email</td>
+        <td>@Model.Email</td>
+    </tr>
+
+    <tr>
+        <td>Salary (₦)</td>
+        <td>@Model.Salary</td>
+    </tr>
+
+    <tr>
+        <td>Department</td>
+        <td>@Model.DepartmentName</td>
+    </tr>
+
+    <tr>
+        <td>Hire date</td>
+        <td>@Model.HireDate</td>
+    </tr>
+</table>

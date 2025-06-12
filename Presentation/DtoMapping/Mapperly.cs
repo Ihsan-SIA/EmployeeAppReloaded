@@ -1,20 +1,23 @@
 ﻿using Application.Dtos;
+using Microsoft.DotNet.Scaffolding.Shared.Project;
 using Presentation.Models;
 
 namespace Presentation.DtoMapping;
 
 public static class Mapperly
 {
-    public static EmployeeViewModel ToViewModel(this EmployeeDto model)
+    public static EmployeeViewModel ToViewModel(this EmployeeDto dto)
     {
         return new EmployeeViewModel()
         {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            HireDate = model.HireDate,
-            Salary = decimal.Parse(model.Salary),
-            DepartmentId = model.DepartmentId,
+            EmployeeId = dto.EmployeeId,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email,
+            HireDate = dto.HireDate,
+            Salary = decimal.Parse(dto.Salary),
+            DepartmentId = dto.DepartmentId,
+            DepartmentName = dto.DepartmentName ?? string.Empty
         };
     }
     // DepartmentViewModel <-> DepartmentDto
@@ -33,21 +36,22 @@ public static class Mapperly
     {
         return new EmployeeDto()
         {
+            EmployeeId = model.EmployeeId,
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
-            Salary = $"{model.Salary:F2}",
+            Salary = $"{model.Salary:N2}",
             HireDate = model.HireDate,
             DepartmentId= model.DepartmentId,
         };
     }
-    public static DepartmentDto ToDto(this DepartmentViewModel vm)
+    public static DepartmentDto ToDto(this DepartmentViewModel viewModel)
     {
         return new DepartmentDto()
         {
-            Id = vm.Id,
-            Name = vm.Name,
-            Description = vm.Description,
+            Id = viewModel.Id,
+            Name = viewModel.Name,
+            Description = viewModel.Description,
             Employees = []
         };
     }

@@ -3,9 +3,8 @@
     ViewData["Title"] = "Employees";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>All @ViewData["Title"]</h1>
 
-<a asp-controller="Employee" asp-action="Create" asp-route-departmentId="@Model.DepartmentId" class="btn btn-outline-success">Create New Employee</a>
 <a asp-controller="Department" asp-action="Index" class="btn btn-outline-info">Back to departments</a>
 <hr>
 
@@ -30,19 +29,23 @@ else
             {
                 <tr>
                     <td>@item.FirstName @item.LastName</td>
-                    <td>@item.DepartmentId"</td>
+                    <td>
+                        <a asp-controller="Department" asp-action="Detail" asp-route-departmentId="@item.DepartmentId" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                            @item.DepartmentName
+                        </a>
+                    </td>
                     <td>@item.Email</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a asp-action="" asp-route-id="" class="btn btn-outline-primary btn-sm">View</a>
-                            <a asp-action="" asp-route-id="" class="btn btn-outline-secondary btn-sm">Edit</a>
-                            <form asp-action="Delete" asp-route-id="" method="post"
+                            <a asp-action="Detail" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-primary btn-sm">View</a>
+                            <a asp-action="Update" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-secondary btn-sm">Update</a>
+                            <form asp-action="Delete" asp-route-employeeId="@item.EmployeeId" method="post"
                                   onsubmit="return confirm('Are you sure?');">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                             </form>
                         </div>
                     </td>
-                    
+
                 </tr>
             }
         </tbody>

@@ -42,7 +42,7 @@ public class DepartmentService : IDepartmentService
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred while creating the department.", ex);
+            Console.WriteLine($"An error occurred while creating the department {ex.Message}.");
             return new DepartmentDto();
         }
     }

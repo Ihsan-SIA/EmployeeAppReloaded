@@ -1,4 +1,5 @@
 ﻿using Application.Services.Employee;
+using Data.Model;
 
 namespace Application.Dtos;
 
@@ -11,7 +12,7 @@ public class EmployeeDto
     public DateTime HireDate { get; set; }
     public string Salary { get; set; } = default!;
     public Guid DepartmentId { get; set; } = default!;
-    //public string? DepartmentName { get; set; }
+    public string? DepartmentName { get; set; }
 }
 
 public class  EmployeesDto

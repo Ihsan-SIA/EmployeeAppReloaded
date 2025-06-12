@@ -17,6 +17,7 @@ public static class Mapper
             HireDate = employee.HireDate,
             Salary = $"{employee.Salary:N2}",
             DepartmentId = employee.DepartmentId,
+            DepartmentName = employee.Department?.Name
         };
     }
     public static DepartmentDto ToDto(this Department department)
