@@ -4,6 +4,7 @@ namespace Presentation.Models
 {
     public class UpdateEmployeeModel
     {
+        public  Guid EmployeeId { get; set; }
         public string FirstName { get; set; } = default!;
         [Required(ErrorMessage = "Field is compulsory")]
         public string LastName { get; set; } = default!;

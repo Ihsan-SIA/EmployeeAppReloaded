@@ -79,33 +79,36 @@ namespace Presentation.Controllers
 
             var employeeDto = new UpdateEmployeeModel()
             {
+                EmployeeId = employee.EmployeeId,
+                DepartmentId = employee.DepartmentId,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Email = employee.Email,
                 Salary = $"{employee.Salary:N2}",
                 HireDate = employee.HireDate,
             };
-            ViewData["Title"] = "Update Employee details";
+            //ViewData["Title"] = "Update Employee details";
             return View(employeeDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(Guid employeeId, UpdateEmployeeModel updateEmployeeModel)
+        public async Task<IActionResult> Update(UpdateEmployeeModel updateEmployeeModel)
         {
-            var employee = await _employeeService.GetEmployeeByIdAsync(employeeId);
+            var employee = await _employeeService.GetEmployeeByIdAsync(updateEmployeeModel.EmployeeId);
             if (employee is null)
             {
-                TempData["Message"] = "Employee not found!";
+                TempData["Message"] = "Unable to update employee details!";
                 return View(updateEmployeeModel);
             }
 
             var employeeDto = new EmployeeDto()
             {
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Email = employee.Email,
-                Salary = employee.Salary,
-                HireDate = employee.HireDate,
+                EmployeeId = updateEmployeeModel.EmployeeId,
+                FirstName = updateEmployeeModel.FirstName,
+                LastName = updateEmployeeModel.LastName,
+                Email = updateEmployeeModel.Email,
+                Salary = updateEmployeeModel.Salary,
+                HireDate = updateEmployeeModel.HireDate,
             };
 
             var result = await _employeeService.UpdateEmployeeAsync(employeeDto);
@@ -115,7 +118,7 @@ namespace Presentation.Controllers
                 return View(updateEmployeeModel);
             }
 
-            TempData["Message"] = "Failed to update employee details!";
+            TempData["Message"] = "Successfully updated employee details!";
             return RedirectToAction("Index");
         }
 
