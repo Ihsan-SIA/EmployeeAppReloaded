@@ -106,7 +106,7 @@ namespace Presentation.Controllers
                 EmployeeId = updateEmployeeModel.EmployeeId,
                 FirstName = updateEmployeeModel.FirstName,
                 LastName = updateEmployeeModel.LastName,
-                Email = updateEmployeeModel.Email,
+                Email = updateEmployeeModel.Email
                 Salary = updateEmployeeModel.Salary,
                 HireDate = updateEmployeeModel.HireDate,
             };
