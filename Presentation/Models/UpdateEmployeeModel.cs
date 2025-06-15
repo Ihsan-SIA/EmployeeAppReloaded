@@ -13,6 +13,7 @@ namespace Presentation.Models
         [Required(ErrorMessage = "Field is compulsory")]
         public DateTime HireDate { get; set; }
         [Required(ErrorMessage = "Field is compulsory")]
+        [DataType(DataType.Date)]
         public string Salary { get; set; } = default!;
         public Guid DepartmentId { get; set; } = default!;
     }

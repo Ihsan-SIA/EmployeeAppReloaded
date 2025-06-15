@@ -17,6 +17,7 @@ namespace Presentation.Models
         [Required(ErrorMessage = "Field is compulsory")]
         public DateTime HireDate { get; set; }
         [Required(ErrorMessage = "Field is compulsory")]
+        [DataType(DataType.Date)]
         public decimal Salary { get; set; }
     }
 }

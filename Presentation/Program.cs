@@ -1,6 +1,9 @@
 using Data.Context;
+using Data.Model;
 using MySql.EntityFrameworkCore.Extensions;
 using Application;
+using Microsoft.AspNetCore.Identity;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,30 @@ builder.Services.AddMySQLServer<EmployeeAppDbContext>(
     builder.Configuration.GetConnectionString("DefaultConnection")!);
 
 builder.Services.AddServices();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequiredUniqueChars = 0;
+        options.Password.RequiredLength = 0;
+    }
+    )
+    .AddEntityFrameworkStores<EmployeeAppDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.SlidingExpiration = false;
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+}
+);
+
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 

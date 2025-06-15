@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />  
+<form asp-controller="Account" asp-action="Index">
+    <a asp-action="Register" class="btn btn-primary">Register</a>
+    <a asp-action="Login" class="btn btn-primary">Login</a>
+</form>
+
