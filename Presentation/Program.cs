@@ -37,7 +37,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 }
 );
 
-builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
@@ -51,7 +50,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+builder.Services.AddAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
