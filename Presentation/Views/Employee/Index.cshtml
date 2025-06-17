@@ -3,10 +3,10 @@
     ViewData["Title"] = "Employees";
 }
 
-<h1>All @ViewData["Title"]</h1>
+<h1 class="text-primary mb-3">All @ViewData["Title"]</h1>
 
-<a asp-controller="Department" asp-action="Index" class="btn btn-outline-info">Back to departments</a>
-<hr>
+<a asp-controller="Department" asp-action="Index" class="btn btn-outline-info mb-3">Back to Departments</a>
+<hr />
 
 @if (Model is null)
 {
@@ -14,41 +14,41 @@
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model.Employees)
-            {
-                <tr>
-                    <td>@item.FirstName @item.LastName</td>
-                    <td>
-                        <a asp-controller="Department" asp-action="Detail" asp-route-departmentId="@item.DepartmentId" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
-                            @item.DepartmentName
-                        </a>
-                    </td>
-                    <td>@item.Email</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a asp-action="Detail" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-primary btn-sm">View</a>
-                            <a asp-action="Update" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-secondary btn-sm">Update</a>
-                            <form asp-action="Delete" asp-route-employeeId="@item.EmployeeId" method="post"
-                                  onsubmit="return confirm('Are you sure?');">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                            </form>
-                        </div>
-                    </td>
-
-                </tr>
-            }
-        </tbody>
-
-    </table>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover m-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Employees)
+                    {
+                        <tr>
+                            <td>@item.FirstName @item.LastName</td>
+                            <td>
+                                <a asp-controller="Department" asp-action="Detail" asp-route-departmentId="@item.DepartmentId" class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover">
+                                    @item.DepartmentName
+                                </a>
+                            </td>
+                            <td>@item.Email</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Detail" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-primary">View</a>
+                                    <a asp-action="Update" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-secondary">Update</a>
+                                    <form asp-action="Delete" asp-route-employeeId="@item.EmployeeId" method="post" onsubmit="return confirm('Are you sure?');">
+                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }

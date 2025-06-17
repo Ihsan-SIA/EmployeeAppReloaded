@@ -29,14 +29,14 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
     options.SlidingExpiration = false;
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
     options.AccessDeniedPath = "/Account/AccessDenied";
 }
 );
-
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
@@ -50,7 +50,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-builder.Services.AddAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

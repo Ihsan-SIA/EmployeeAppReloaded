@@ -2,38 +2,44 @@
 @{
     ViewData["Title"] = $"{Model.Name} details";
 }
-<h1>@ViewData["Title"]</h1>
+
+<h1 class="text-primary mb-3">@ViewData["Title"]</h1>
 <hr />
-<a asp-controller="Employee" asp-route-departmentId="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a>
+
+<a asp-controller="Employee" asp-route-departmentId="@Model.Id" asp-action="Create" class="btn btn-outline-primary mb-3">Add Employee</a>
 
 @if (Model.Employees is not null && Model.Employees.Any())
 {
-    <table class="table table-primary">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Salary (₦)</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @foreach (var employees in Model.Employees)
-            {
-                <tr>
-                    <td>@employees.FirstName @employees.LastName</td>
-                    <td>@employees.Email</td>
-                    <td>@employees.Salary</td>
-                    <td><a asp-controller="Employee" asp-action="Detail" asp-route-employeeId="@employees.EmployeeId" class="btn btn-outline-primary">View Employee</a></td>
-                </tr>
-            }
-            @* <a asp-action="Edit" class="btn btn-primary">Edit</a>
-            <a asp-controller="Employee" asp-route-id="@Model.Id" asp-action="Create" class="btn btn-primary">Add Employee</a> *@
-    </table>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover m-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Salary (₦)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employees in Model.Employees)
+                    {
+                        <tr>
+                            <td>@employees.FirstName @employees.LastName</td>
+                            <td>@employees.Email</td>
+                            <td>@employees.Salary</td>
+                            <td>
+                                <a asp-controller="Employee" asp-action="Detail" asp-route-employeeId="@employees.EmployeeId" class="btn btn-outline-primary btn-sm">View</a>
+                                <a asp-controller="Employee" asp-action="Delete" class="btn btn-outline-primary btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
 else
 {
-    <p class="text-info">No employees available in this department</p>
+    <p class="text-info">No employees available in this department.</p>
 }

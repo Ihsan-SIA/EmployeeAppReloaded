@@ -2,22 +2,24 @@
 @{
     ViewData["Title"] = "Edit Department Record";
 }
-<h1>@ViewData["Title"]</h1>
 
+<h1 class="text-primary mb-3">@ViewData["Title"]</h1>
+<hr />
 
-<form asp-action="Edit" method="post">
-    
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+<div class="card shadow-sm p-4">
+    <form asp-action="Edit" method="post">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Update Department</button>
-</form>
+        <button type="submit" class="btn btn-primary">Update Department</button>
+    </form>
+</div>

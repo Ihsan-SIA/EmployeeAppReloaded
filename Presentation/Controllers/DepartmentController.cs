@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Services.Department;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DtoMapping;
 using Presentation.Models;
@@ -7,6 +8,7 @@ using Presentation.Views.Department;
 
 namespace Presentation.Controllers;
 
+[Authorize]
 public class DepartmentController : BaseController
 {
     private readonly IDepartmentService _departmentService;

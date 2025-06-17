@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Services.Employee;
 using Data.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DtoMapping;
 using Presentation.Models;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     public class EmployeeController : BaseController
     {
         private readonly IEmployeeService _employeeService;
