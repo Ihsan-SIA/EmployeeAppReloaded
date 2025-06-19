@@ -2,21 +2,50 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="slideshow-container mb-5">
+    <div class="overlay"></div>
 
-    <div class="slideshow-container">
-        <div class="slideshow-image"></div>
-        <div class="slideshow-image"></div>
-        <div class="slideshow-image"></div>
+    <div class="hero-text">
+        <h1>Welcome to Ihsan Employee Manager</h1>
+        <p>Your all-in-one platform for managing staff effectively and efficiently.</p>
+        <a class="hero-brn" asp-controller="Employee" asp-action="Index">View Employees</a>
+    </div>
+</div>
 
-        <div class="overlay"></div>
-
-        <div class="hero-text">
-            <h1>Welcome to the Ihsan Employee Manager</h1>
-            <p>Your all-in-one platform fo managing staff effectively and efficiently.</p>
-            <a class="hero-brn" asp-controller="Employee" asp-action="Index">View Employees</a>
+<div class="row text-center mb-5">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Departments</h5>
+                <p class="card-text">Organize your employees by departments and assign roles with ease.</p>
+                <a class="btn btn-outline-primary" asp-controller="Department" asp-action="Index">View Departments</a>
+            </div>
         </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Employees</h5>
+                <p class="card-text">Add, update, and manage employees in a streamlined interface.</p>
+                <a class="btn btn-outline-primary" asp-controller="Employee" asp-action="Index">View Employees</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Secure Access</h5>
+                <p class="card-text">Your data is safe. Only authorized users can make changes to the system.</p>
+                <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Login">Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4 p-4 bg-light rounded shadow-sm">
+        <blockquote class="blockquote">
+            <p class="mb-0">"The secret of my success is that we have gone to exceptional lengths to hire the best people." — Steve Jobs</p>
+        </blockquote>
+    </div>
+
 </div>
