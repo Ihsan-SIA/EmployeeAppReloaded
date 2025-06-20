@@ -50,7 +50,11 @@ namespace Presentation.Controllers
             }
             return View(model);
         }
-        
+        public IActionResult Edit()
+        {
+
+        }
+
         public IActionResult Login()
         {
             return View();
@@ -71,11 +75,11 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        
     }
 }

@@ -36,9 +36,16 @@
     <div class="col-md-4">
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
-                <h5 class="card-title text-primary">Secure Access</h5>
+                <h5 class="card-title text-primary">Manage Access</h5>
                 <p class="card-text">Your data is safe. Only authorized users can make changes to the system.</p>
-                <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Login">Login</a>
+                @if(User.Identity?.IsAuthenticated ?? false)
+                {
+                    <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Logout">Logout</a>
+                }
+                else
+                {
+                    <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Login">Login</a>
+                }
             </div>
         </div>
     </div>
