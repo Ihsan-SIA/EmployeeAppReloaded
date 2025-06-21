@@ -10,11 +10,13 @@ namespace Presentation.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IEmailSender<IdentityUser> _emailSender;
 
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IEmailSender<IdentityUser> emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -50,9 +52,17 @@ namespace Presentation.Controllers
             }
             return View(model);
         }
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(EditProfileViewModel model)
         {
-
+            if (!ModelState.IsValid)
+            {
+                var user = new IdentityUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+                var result = await _emailSender.
+            }
         }
 
         public IActionResult Login()
