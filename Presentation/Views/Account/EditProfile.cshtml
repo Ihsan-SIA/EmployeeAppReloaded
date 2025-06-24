@@ -1,0 +1,16 @@
+﻿@model Presentation.Models.UserVM.EditProfileViewModel
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<form method="post">
+    <div class="input-group mb-3">
+        <label asp-for="Email" class="input-group-text">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign up</button>
+</form>

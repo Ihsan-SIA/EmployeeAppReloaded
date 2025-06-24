@@ -10,13 +10,11 @@ namespace Presentation.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IEmailSender<IdentityUser> _emailSender;
 
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IEmailSender<IdentityUser> emailSender)
+        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -52,17 +50,48 @@ namespace Presentation.Controllers
             }
             return View(model);
         }
-        public async Task<IActionResult> Edit(EditProfileViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is null)
+            {
+                SetFlashMessage("Sorry could not find user!", "error");
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditProfileViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                var user = new IdentityUser()
-                {
-                    UserName = model.Email,
-                    Email = model.Email
-                };
-                var result = await _emailSender.
+                TempData["ErrorMessage"] = "Incorrect input of Email";
+                return View(model);
             }
+
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user is null)
+            {
+                TempData["ErrorMessage"] = "Failed to update";
+                return RedirectToAction("Index");
+            }
+
+            user.Email = model.Email;
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction("Index", "Home");
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null) return RedirectToAction("Index", "Home");
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
         public IActionResult Login()

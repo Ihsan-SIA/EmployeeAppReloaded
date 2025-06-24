@@ -59,45 +59,6 @@ namespace Application.Services.Employee
             return employees.EmployeesDto();
         }
 
-        //public async Task<EmployeeDto> GetEmployeeByIdAsync(EmployeeDto employeeDto)
-        //{
-        //    var employee = await _context.Employees
-        //        .Include(e => e.Department)
-        //        .FirstOrDefaultAsync(x => x.Id == employeeDto.EmployeeId);
-        //    if (employee is null)
-        //    {
-        //        return null;
-        //    }
-
-        //    employee.FirstName = employeeDto.FirstName;
-        //    employee.LastName = employeeDto.LastName;
-        //    employee.Email = employeeDto.Email;
-        //    employee.HireDate = employeeDto.HireDate;
-        //    employee.Salary = decimal.Parse(employeeDto.Salary);
-
-        //    //var employeeDto = new EmployeeDto()
-        //    //{
-        //    //    EmployeeId = employees.Id,
-        //    //    FirstName = employees.FirstName,
-        //    //    LastName = employees.LastName,
-        //    //    Email = employees.Email,
-        //    //    Salary = $"{employees.Salary:N2}",
-        //    //    HireDate = employees.HireDate,
-        //    //    DepartmentName = employees.Department?.Name,
-        //    //};
-        //    try
-        //    {
-        //        _context.Employees.Update(employee);
-        //        await _context.SaveChangesAsync();
-        //        return employee.ToDto();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"An error occurred while creating the department: {ex.Message}");
-        //        return new EmployeeDto();
-        //    }
-        //    return employeeDto;
-        //}
         public async Task<EmployeeDto> GetEmployeeByIdAsync(Guid employeeId)
         {
             var employees = await _context.Employees
