@@ -14,6 +14,5 @@
     public class EmployeesViewModel
     {
         public List<EmployeeViewModel> Employees { get; set; } = default!;
-        public Guid DepartmentId { get; set; }
     }
 }
