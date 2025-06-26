@@ -1,11 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Presentation.Models.UserVM
+namespace Presentation.Models;
+
+public class EditProfileViewModel
 {
-    public class EditProfileViewModel
-    {
-        [Required]
-        [EmailAddress]
-        public required string Email { get; set; }
-    }
+    public string Id { get; set; } = default!;
+
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; } = default!;
+
+    [Required]
+    public string UserName { get; set; } = default!;
 }

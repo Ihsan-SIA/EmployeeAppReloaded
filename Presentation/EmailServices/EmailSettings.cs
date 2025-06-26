@@ -1,6 +1,6 @@
 ﻿namespace Presentation.EmailService;
 
-public class EmailService
+public class EmailSettings
 {
     public string Host { get; set; } = default!;
     public int Port { get; set; }

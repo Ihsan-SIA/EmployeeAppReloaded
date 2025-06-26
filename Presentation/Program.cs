@@ -1,8 +1,9 @@
+using Application;
 using Data.Context;
 using Data.Model;
-using MySql.EntityFrameworkCore.Extensions;
-using Application;
 using Microsoft.AspNetCore.Identity;
+using MySql.EntityFrameworkCore.Extensions;
+using Presentation.EmailServices;
 using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,11 +27,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     )
     .AddEntityFrameworkStores<EmployeeAppDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromDays(30);
-    options.SlidingExpiration = false;
+    options.ExpireTimeSpan = TimeSpan.FromHours(3);
+    options.SlidingExpiration = true;
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
     options.AccessDeniedPath = "/Account/AccessDenied";
