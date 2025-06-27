@@ -1,4 +1,4 @@
-﻿@model Presentation.Models.EditProfileViewModel;
+﻿@model EditProfileViewModel;
 @{
     ViewData["Title"] = "Edit Profile";
 }
@@ -6,11 +6,17 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 
-<form method="post">
+<form method="post" asp-action="EditProfile">
     <div class="input-group mb-3">
         <label asp-for="Email" class="input-group-text">Email</label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Sign up</button>
+    
+    <div class="input-group mb-3">
+        <label asp-for="UserName" class="input-group-text">Username</label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Save changes</button>
 </form>
