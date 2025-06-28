@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Presentation.Models;
 using Presentation.Models.UserVM;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace Presentation.Controllers
 {
@@ -101,8 +102,8 @@ namespace Presentation.Controllers
             var model = new EditProfileViewModel
             {
                 Id = user.Id,
-                Email = user.Email,
-                UserName = user.UserName
+                Email = user.Email ?? "",
+                UserName = user.UserName ?? ""
             };
             return View(model);
         }
@@ -126,6 +127,7 @@ namespace Presentation.Controllers
             user.Email = model.Email;
             user.UserName = model.UserName;
             await _userManager.UpdateAsync(user);
+            SetFlashMessage("Profile updated successfully!!", "success");
             return RedirectToAction("Index", "Home");
         }
 

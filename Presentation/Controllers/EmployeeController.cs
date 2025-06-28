@@ -89,17 +89,21 @@ namespace Presentation.Controllers
                 Salary = $"{employee.Salary:N2}",
                 HireDate = employee.HireDate,
             };
-            //ViewData["Title"] = "Update Employee details";
             return View(employeeDto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(UpdateEmployeeModel updateEmployeeModel)
         {
+            if (!ModelState.IsValid)
+            {
+                SetFlashMessage("Invalid input detected! Check again", "error");
+                return View(updateEmployeeModel);
+            }
             var employee = await _employeeService.GetEmployeeByIdAsync(updateEmployeeModel.EmployeeId);
             if (employee is null)
             {
-                TempData["Message"] = "Unable to update employee details!";
+                SetFlashMessage("Unable to update employee details!", "error");
                 return View(updateEmployeeModel);
             }
 

@@ -6,7 +6,8 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 
-<form method="post" asp-action="EditProfile">
+<form method="post" asp-controller="Acco;unt" asp-action="EditProfile">
+    <input type="hidden" asp-for="Id"/>
     <div class="input-group mb-3">
         <label asp-for="Email" class="input-group-text">Email</label>
         <input asp-for="Email" class="form-control" />
