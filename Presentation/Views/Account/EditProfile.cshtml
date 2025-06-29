@@ -6,18 +6,13 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 
-<form method="post" asp-controller="Acco;unt" asp-action="EditProfile">
+<form method="post" asp-controller="Account" asp-action="EditProfile">
     <input type="hidden" asp-for="Id"/>
     <div class="input-group mb-3">
-        <label asp-for="Email" class="input-group-text">Email</label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+        <label asp-for="PhoneNumber" class="input-group-text">Phone number</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div>
     
-    <div class="input-group mb-3">
-        <label asp-for="UserName" class="input-group-text">Username</label>
-        <input asp-for="UserName" class="form-control" />
-        <span asp-validation-for="UserName" class="text-danger"></span>
-    </div>
     <button type="submit" class="btn btn-success">Save changes</button>
 </form>

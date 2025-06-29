@@ -12,4 +12,6 @@ public class EditProfileViewModel
 
     [Required]
     public string UserName { get; set; } = default!;
+    [Required]
+    public string PhoneNumber { get; set; } = default!;
 }

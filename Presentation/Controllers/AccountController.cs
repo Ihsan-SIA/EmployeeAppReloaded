@@ -82,14 +82,6 @@ namespace Presentation.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-
-
-
-
-
-
-
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
@@ -102,8 +94,7 @@ namespace Presentation.Controllers
             var model = new EditProfileViewModel
             {
                 Id = user.Id,
-                Email = user.Email ?? "",
-                UserName = user.UserName ?? ""
+                PhoneNumber = user.PhoneNumber ?? ""
             };
             return View(model);
         }
@@ -124,12 +115,16 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index");
             }
 
-            user.Email = model.Email;
-            user.UserName = model.UserName;
+            user.PhoneNumber = model.PhoneNumber;
             await _userManager.UpdateAsync(user);
             SetFlashMessage("Profile updated successfully!!", "success");
             return RedirectToAction("Index", "Home");
         }
+
+
+
+
+        [HttpPost]
 
         public IActionResult ResetPassword(string token, string email)
         {
