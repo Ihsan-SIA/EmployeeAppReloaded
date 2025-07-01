@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Services.Employee;
+using Data.Context;
 using Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,8 @@ namespace Presentation.Controllers
         {
             var model = new CreateEmployeeModel()
             {
-                DepartmentId = departmentId
+                DepartmentId = departmentId,
+                HireDate = DateTime.Now
             };
             
             return View(model);
