@@ -117,8 +117,6 @@ public class DepartmentController : BaseController
         {
             TempData["Message"] = $"Department does not have employees yet!";
             return RedirectToAction("Index");
-            //return View(new DepartmentViewModel());
-            //return View();
         }
 
         var viewModel = employees.ToViewModel();

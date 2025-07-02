@@ -66,7 +66,6 @@ public class DepartmentService : IDepartmentService
 
     public async Task<DepartmentDto> GetDepartmentByIdAsync(Guid departmentId)
     {
-        //var department = await _context.Departments.FirstOrDefaultAsync(x => x.Id == departmentId);
         var department = await _context.Departments
             .Include(y => y.Employees)
             .FirstOrDefaultAsync(x => x.Id == departmentId);
