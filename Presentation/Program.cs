@@ -1,7 +1,9 @@
 using Application;
+using Application.Email;
 using Data.Context;
 using Data.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using MySql.EntityFrameworkCore.Extensions;
 using Presentation.EmailServices;
 using System.Runtime.CompilerServices;
@@ -28,6 +30,11 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<EmployeeAppDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
+
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

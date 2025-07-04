@@ -124,8 +124,52 @@ namespace Presentation.Controllers
 
 
 
-        [HttpPost]
 
+
+
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                return RedirectToAction("ForgotPasswordConfirmation");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { token, email = model.Email }, Request.Scheme);
+
+            // Send the email using your EmailSender service
+            await _emailSender.SendEmailAsync(
+                model.Email,
+                "Reset Password",
+                $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>.");
+
+            return RedirectToAction("ForgotPasswordConfirmation");
+        }
+
+        [AllowAnonymous]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+
+
+
+
+        [HttpGet]
         public IActionResult ResetPassword(string token, string email)
         {
             if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
@@ -143,6 +187,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -174,41 +219,9 @@ namespace Presentation.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult ForgotPassword()
-        {
-            return View();
-        }
+        
 
-        [HttpPost]
-        public async Task<IActionResult> ForgotPassword(string email)
-        {
-            if (!ModelState.IsValid)
-                return View();
-
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-            {
-                return RedirectToAction("ForgotPasswordConfirmation");
-            }
-
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.Action("ResetPassword", "Account", new { token, email = email }, Request.Scheme);
-
-            // Send the email using your EmailSender service
-            await _emailSender.SendEmailAsync(
-                email,
-                "Reset Password",
-                $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>.");
-
-            return RedirectToAction("ForgotPasswordConfirmation");
-        }
-
-        [AllowAnonymous]
-        public IActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
+        
 
 
         //[AllowAnonymous]

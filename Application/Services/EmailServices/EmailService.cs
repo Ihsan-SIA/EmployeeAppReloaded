@@ -6,7 +6,7 @@ using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
 using Application.Services.Users;
-using Presentation.EmailService;
+using Application.Email;
 
 namespace Presentation.EmailServices;
 public class EmailSender : IEmailSender
