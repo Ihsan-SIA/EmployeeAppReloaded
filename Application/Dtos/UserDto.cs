@@ -14,7 +14,6 @@
 
     public record ChangePasswordDto(
         string Id,
-        string OldPassword,
         string NewPassword
         );
 }
