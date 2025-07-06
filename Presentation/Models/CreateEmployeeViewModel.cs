@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.Models
 {
-    public class CreateEmployeeModel
+    public class CreateEmployeeViewModel
     {
         [Required(ErrorMessage = "Department is required")]
         public Guid DepartmentId { get; set; } = default!;

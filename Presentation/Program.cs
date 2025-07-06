@@ -29,11 +29,10 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     )
     .AddEntityFrameworkStores<EmployeeAppDbContext>()
     .AddDefaultTokenProviders();
-builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 
 builder.Services.ConfigureApplicationCookie(options =>

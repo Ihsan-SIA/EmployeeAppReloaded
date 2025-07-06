@@ -74,7 +74,7 @@ public class DepartmentController : BaseController
             TempData["ErrorMessage"] = "Department not found";
             return Redirect("Index");
         }
-        var departmentDTO = new UpdateDepartmentModel()
+        var departmentDTO = new UpdateDepartmentViewModel()
         {
             Name = department.Name,
             Description = department.Description,
@@ -84,7 +84,7 @@ public class DepartmentController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult> Edit([FromRoute] Guid id, UpdateDepartmentModel updateModel)
+    public async Task<ActionResult> Edit([FromRoute] Guid id, UpdateDepartmentViewModel updateModel)
     {
         if (!ModelState.IsValid)
         {

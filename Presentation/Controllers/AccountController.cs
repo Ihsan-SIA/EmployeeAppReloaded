@@ -44,17 +44,51 @@ namespace Presentation.Controllers
 
                 if (result.Succeeded)
                 {
-                    SetFlashMessage("Registered successfully", "success");
-                    return RedirectToAction("Login");
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+                    var confirmationUrl = Url.Action("ConfirmEmail", "Account",
+                        new { userId = user.Id, token = token }, Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
+                        $"Please confirm your account by clicking <a href='{confirmationUrl}'>here</a>.");
+
+                    SetFlashMessage("Registration successful! Please check your email to confirm your account.", "success");
+                    return RedirectToAction("Login");
                 }
 
                 var errorMessages = string.Join("<br>", result.Errors.Select(e => e.Description));
-
                 SetFlashMessage(errorMessages, "error");
             }
             return View(model);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return BadRequest("Invalid confirmation request.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                SetFlashMessage("Email confirmed successfully!", "success");
+                return RedirectToAction("Login");
+            }
+
+            SetFlashMessage("Failed to confirm email. Please try again.", "error");
+            return RedirectToAction("Index");
+        }
+
+
 
         public IActionResult Login()
         {
@@ -144,6 +178,7 @@ namespace Presentation.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
+                SetFlashMessage("Unable to reset password. The email address does not match your user email", "error");
                 return RedirectToAction("ForgotPasswordConfirmation");
             }
 
@@ -219,9 +254,9 @@ namespace Presentation.Controllers
         }
 
 
-        
 
-        
+
+
 
 
         //[AllowAnonymous]
