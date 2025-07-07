@@ -16,7 +16,7 @@ public class Employee
 }
 public class Address
 {
-    [Required(ErrorMessage = "Stree number and name is required")]
+    [Required(ErrorMessage = "Street number and name is required")]
     public string Street { get; set; } = default!;
 
     [Required(ErrorMessage = "State is required")]
