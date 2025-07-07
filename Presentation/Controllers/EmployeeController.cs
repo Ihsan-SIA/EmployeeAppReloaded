@@ -4,7 +4,9 @@ using Data.Context;
 using Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Presentation.DtoMapping;
+using Presentation.Helpers;
 using Presentation.Models;
 using System.Threading.Tasks;
 
@@ -29,24 +31,41 @@ namespace Presentation.Controllers
             var viewModel = employees.ToViewModel();
             return View(viewModel);
         }
+
+        private List<SelectListItem> GetNigerianStates()
+        {
+            return NigerianStates.StateNames
+                .Select(states => new SelectListItem 
+                { 
+                    Value = states, 
+                    Text = states 
+                })
+                .ToList();
+        }
+
         [HttpGet]
         public IActionResult Create(Guid departmentId)
         {
             var model = new CreateEmployeeViewModel()
             {
                 DepartmentId = departmentId,
-                HireDate = DateTime.Now
+                HireDate = DateTime.Now,
+                Address = new(),
+                States = GetNigerianStates()
             };
             
             return View(model);
 
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateEmployeeViewModel employee)
         {
             if (!ModelState.IsValid)
             {
+                employee.States = GetNigerianStates();
+                employee.Address ??= new();
                 SetFlashMessage("Please fill all fields correctly", "error");
                 return View(employee);
             }
@@ -59,11 +78,13 @@ namespace Presentation.Controllers
                 Salary = employee.Salary,
                 HireDate = employee.HireDate,
                 DepartmentId = employee.DepartmentId,
+                Address = employee.Address
             };
             var result = await _employeeService.CreateEmployeeAsync(employeeModel);
             if (result is null)
             {
                 SetFlashMessage("An error occurred while creating the department. Please check if there's any problem or department already exist and try again.", "error");
+                employee.States = GetNigerianStates();
                 return View(employee);
             }
             SetFlashMessage("Employee added successfully!", "success");
@@ -81,7 +102,7 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index");
             }
 
-            var employeeDto = new UpdateEmployeeViewModel()
+            var employeeViewModel = new UpdateEmployeeViewModel()
             {
                 EmployeeId = employee.EmployeeId,
                 DepartmentId = employee.DepartmentId,
@@ -90,8 +111,10 @@ namespace Presentation.Controllers
                 Email = employee.Email,
                 Salary = $"{employee.Salary:N2}",
                 HireDate = employee.HireDate,
+                Address = employee.Address ?? new(),
+                States = GetNigerianStates()
             };
-            return View(employeeDto);
+            return View(employeeViewModel);
         }
 
         [HttpPost]
@@ -99,12 +122,15 @@ namespace Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
+                updateEmployeeModel.States = GetNigerianStates();
+                updateEmployeeModel.Address ??= new();
                 SetFlashMessage("Invalid input detected! Check again", "error");
                 return View(updateEmployeeModel);
             }
             var employee = await _employeeService.GetEmployeeByIdAsync(updateEmployeeModel.EmployeeId);
             if (employee is null)
             {
+                updateEmployeeModel.States = GetNigerianStates();
                 SetFlashMessage("Unable to update employee details!", "error");
                 return View(updateEmployeeModel);
             }
@@ -117,12 +143,14 @@ namespace Presentation.Controllers
                 Email = updateEmployeeModel.Email,
                 Salary = updateEmployeeModel.Salary,
                 HireDate = updateEmployeeModel.HireDate,
+                Address = updateEmployeeModel.Address ?? new()
             };
 
             var result = await _employeeService.UpdateEmployeeAsync(employeeDto);
             if (result is null)
             {
                 TempData["Message"] = "Failed to update employee details!";
+                updateEmployeeModel.States = GetNigerianStates();
                 return View(updateEmployeeModel);
             }
 

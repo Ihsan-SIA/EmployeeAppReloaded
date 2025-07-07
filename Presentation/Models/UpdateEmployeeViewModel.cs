@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Data.Model;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.Models
 {
@@ -21,7 +24,10 @@ namespace Presentation.Models
         
         [Required(ErrorMessage = "Field is compulsory")]
         public string Salary { get; set; } = default!;
-        
         public Guid DepartmentId { get; set; } = default!;
+        public Address Address { get; set; } = default!;
+
+        [BindNever]
+        public List<SelectListItem> States { get; set; } = new();
     }
 }

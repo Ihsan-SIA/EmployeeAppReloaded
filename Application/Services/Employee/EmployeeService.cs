@@ -77,6 +77,7 @@ namespace Application.Services.Employee
                 Salary = $"{employees.Salary:N2}",
                 HireDate = employees.HireDate,
                 DepartmentName = employees.Department?.Name,
+                Address = employees.Address
             };
             return employeeDto;
         }
@@ -93,6 +94,7 @@ namespace Application.Services.Employee
             employee.LastName = employeeDto.LastName;
             employee.Email = employeeDto.Email;
             employee.HireDate = employeeDto.HireDate;
+            employee.Address = employeeDto.Address?? new();
             employee.Salary = decimal.Parse(employeeDto.Salary);
             try
             {

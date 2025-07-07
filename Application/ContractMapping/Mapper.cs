@@ -17,7 +17,8 @@ public static class Mapper
             HireDate = employee.HireDate,
             Salary = $"{employee.Salary:N2}",
             DepartmentId = employee.DepartmentId,
-            DepartmentName = employee.Department?.Name
+            DepartmentName = employee.Department?.Name,
+            Address = employee.Address
         };
     }
     public static DepartmentDto ToDto(this Department department)
@@ -41,7 +42,8 @@ public static class Mapper
             Email = createEmployeeDto.Email,
             HireDate = createEmployeeDto.HireDate,
             Salary = createEmployeeDto.Salary,
-            DepartmentId = createEmployeeDto.DepartmentId
+            DepartmentId = createEmployeeDto.DepartmentId,
+            Address = createEmployeeDto.Address,
         };
     }
     public static Department ToModel(this CreateDepartmentDto createDepartmentDto)

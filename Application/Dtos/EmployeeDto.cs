@@ -13,6 +13,7 @@ public class EmployeeDto
     public string Salary { get; set; } = default!;
     public Guid DepartmentId { get; set; } = default!;
     public string? DepartmentName { get; set; }
+    public Address? Address { get; set; } = default!;
 }
 
 public class  EmployeesDto
@@ -29,4 +30,5 @@ public class  CreateEmployeeDto
     public DateTime HireDate { get; set; }
     public decimal Salary { get; set; }
     public Guid DepartmentId { get; set; } = default!;
+    public Address Address { get; set; } = default!;
 }

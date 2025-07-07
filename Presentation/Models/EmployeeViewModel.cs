@@ -1,4 +1,7 @@
-﻿namespace Presentation.Models
+﻿using Data.Model;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace Presentation.Models
 {
     public class EmployeeViewModel
     {
@@ -10,6 +13,7 @@
         public decimal Salary { get; set; }
         public Guid DepartmentId { get; set; } = default!;
         public string DepartmentName { get; set;} = default!;
+        public Address Address { get; set; } = default!;
     }
     public class EmployeesViewModel
     {

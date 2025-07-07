@@ -17,7 +17,8 @@ public static class Mapperly
             HireDate = dto.HireDate,
             Salary = decimal.Parse(dto.Salary),
             DepartmentId = dto.DepartmentId,
-            DepartmentName = dto.DepartmentName ?? string.Empty
+            DepartmentName = dto.DepartmentName ?? string.Empty,
+            Address = dto.Address ?? new()
         };
     }
     // DepartmentViewModel <-> DepartmentDto
@@ -43,6 +44,7 @@ public static class Mapperly
             Salary = $"{model.Salary:N2}",
             HireDate = model.HireDate,
             DepartmentId= model.DepartmentId,
+            Address = model.Address
         };
     }
     public static DepartmentDto ToDto(this DepartmentViewModel viewModel)

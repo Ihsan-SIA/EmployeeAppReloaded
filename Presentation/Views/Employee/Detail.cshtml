@@ -26,6 +26,10 @@
                     <td>@Model.Email</td>
                 </tr>
                 <tr>
+                    <th>Address</th>
+                    <td>@Model.Address.Street, @Model.Address.State</td>
+                </tr>
+                <tr>
                     <th>Salary (₦)</th>
                     <td>@Model.Salary</td>
                 </tr>
@@ -37,6 +41,7 @@
                     <th>Hire Date</th>
                     <td>@Model.HireDate</td>
                 </tr>
+
             </tbody>
         </table>
     </div>
