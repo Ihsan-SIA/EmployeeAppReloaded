@@ -2,7 +2,7 @@
 
 namespace Presentation.Models
 {
-    public class UpdateEmployeeModel
+    public class UpdateEmployeeViewModel
     {
         public  Guid EmployeeId { get; set; }
         

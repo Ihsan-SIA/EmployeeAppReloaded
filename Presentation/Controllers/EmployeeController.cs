@@ -32,7 +32,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult Create(Guid departmentId)
         {
-            var model = new CreateEmployeeModel()
+            var model = new CreateEmployeeViewModel()
             {
                 DepartmentId = departmentId,
                 HireDate = DateTime.Now
@@ -43,7 +43,7 @@ namespace Presentation.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateEmployeeModel employee)
+        public async Task<IActionResult> Create(CreateEmployeeViewModel employee)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index");
             }
 
-            var employeeDto = new UpdateEmployeeModel()
+            var employeeDto = new UpdateEmployeeViewModel()
             {
                 EmployeeId = employee.EmployeeId,
                 DepartmentId = employee.DepartmentId,
@@ -95,7 +95,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateEmployeeModel updateEmployeeModel)
+        public async Task<IActionResult> Update(UpdateEmployeeViewModel updateEmployeeModel)
         {
             if (!ModelState.IsValid)
             {
