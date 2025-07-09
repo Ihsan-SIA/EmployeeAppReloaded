@@ -17,10 +17,11 @@ public static class Mapper
             HireDate = employee.HireDate,
             Salary = $"{employee.Salary:N2}",
             DepartmentId = employee.DepartmentId,
-            DepartmentName = employee.Department?.Name,
-            Address = employee.Address
+            DepartmentName = employee.Department.Name,
+            Address = employee.Address,
         };
     }
+    
     public static DepartmentDto ToDto(this Department department)
     {
         if (department == null) return null!;

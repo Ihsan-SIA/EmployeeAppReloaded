@@ -181,7 +181,7 @@ namespace Presentation.Controllers
             if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 SetFlashMessage("Unable to reset password. The email address does not match your user email", "error");
-                return RedirectToAction("ForgotPasswordConfirmation");
+                return View(model);
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
