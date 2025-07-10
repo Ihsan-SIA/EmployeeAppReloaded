@@ -6,16 +6,16 @@ public static class Mapper
 {
     public static EmployeeDto ToDto(this Employee employee)
     {
-        if (employee == null) return null;
+        if (employee is null) return null;
 
         return new EmployeeDto()
         {
             EmployeeId = employee.Id,
             FirstName = employee.FirstName,
             LastName = employee.LastName,
-            Email = employee.Email,
             HireDate = employee.HireDate,
             Salary = $"{employee.Salary:N2}",
+            Email = employee.Email,
             DepartmentId = employee.DepartmentId,
             DepartmentName = employee.Department.Name,
             Address = employee.Address,
