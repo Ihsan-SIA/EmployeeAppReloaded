@@ -1,48 +1,59 @@
-﻿   @model EmployeeViewModel
+﻿@model EmployeeViewModel
 @{
-    ViewData["Title"] = $"{Model.FirstName} {Model.LastName} details";
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName} Details";
 }
 
-<h1 class="text-primary mb-3">@ViewData["Title"]</h1>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
 
-<div class="mb-3 btn-group" role="group">
-    <a asp-action="Update" asp-route-employeeId="@Model.EmployeeId" class="btn btn-outline-primary">Update</a>
-    <a asp-action="Index" class="btn btn-outline-secondary">All Employees</a>
-    
-</div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-primary">
+                    <i class="bi bi-person-vcard me-2"></i> @ViewData["Title"]
+                </h2>
+                <div class="btn-group">
+                    <a asp-action="Update" asp-route-employeeId="@Model.EmployeeId" class="btn btn-outline-primary">
+                        <i class="bi bi-pencil-square me-1"></i> Update
+                    </a>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-people me-1"></i> All Employees
+                    </a>
+                </div>
+            </div>
 
-<hr />
+            <div class="card shadow-lg rounded-4 border-0">
+                <div class="card-body px-4 py-3">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                            <tr class="border-bottom">
+                                <th class="text-muted w-25">Full Name</th>
+                                <td class="fw-semibold">@Model.FirstName @Model.LastName</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-muted">Email</th>
+                                <td>@Model.Email</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-muted">Address</th>
+                                <td>@Model.Address.Street, @Model.Address.State</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-muted">Salary (₦)</th>
+                                <td>@Model.Salary.ToString("N0")</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-muted">Department</th>
+                                <td>@Model.DepartmentName</td>
+                            </tr>
+                            <tr>
+                                <th class="text-muted">Hire Date</th>
+                                <td>@Model.HireDate.ToString("MMMM dd, yyyy")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-<div class="card shadow-sm">
-    <div class="card-body p-0">
-        <table class="table table-bordered m-0">
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>@Model.FirstName @Model.LastName</td>
-                </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>@Model.Email</td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td>@Model.Address.Street, @Model.Address.State</td>
-                </tr>
-                <tr>
-                    <th>Salary (₦)</th>
-                    <td>@Model.Salary</td>
-                </tr>
-                <tr>
-                    <th>Department</th>
-                    <td>@Model.DepartmentName</td>
-                </tr>
-                <tr>
-                    <th>Hire Date</th>
-                    <td>@Model.HireDate</td>
-                </tr>
-
-            </tbody>
-        </table>
+        </div>
     </div>
 </div>

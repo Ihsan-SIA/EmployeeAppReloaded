@@ -8,15 +8,17 @@
 <a asp-controller="Department" asp-action="Index" class="btn btn-outline-info mb-3">Back to Departments</a>
 <hr />
 
-@if (Model is null)
+@if (Model is null || Model.Employees.Count == 0)
 {
-    <p class="text-danger">No records available!</p>
+    <div class="alert alert-warning" role="alert">
+        No employee records found.
+    </div>
 }
 else
 {
     <div class="card shadow-sm">
         <div class="card-body p-0">
-            <table class="table table-hover m-0">
+            <table class="table table-hover table-striped m-0">
                 <thead class="table-primary">
                     <tr>
                         <th>Name</th>
@@ -28,19 +30,33 @@ else
                 <tbody>
                     @foreach (var item in Model.Employees)
                     {
-                        <tr>
+                        <tr class="clickable-row" data-url="@Url.Action("Detail", "Employee", new { employeeId = item.EmployeeId })" style="cursor: pointer;">
                             <td>@item.FirstName @item.LastName</td>
                             <td>
-                                <a asp-controller="Department" asp-action="Detail" asp-route-departmentId="@item.DepartmentId" class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover">
+                                <a asp-controller="Department"
+                                   asp-action="Detail"
+                                   asp-route-departmentId="@item.DepartmentId"
+                                   class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
+                                   onclick="event.stopPropagation();">
                                     @item.DepartmentName
                                 </a>
                             </td>
                             <td>@item.Email</td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <a asp-action="Detail" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-primary">View</a>
-                                    <a asp-action="Update" asp-route-employeeId="@item.EmployeeId" class="btn btn-outline-secondary">Update</a>
-                                    <form asp-action="Delete" asp-route-employeeId="@item.EmployeeId" method="post" onsubmit="return confirm('Are you sure?');">
+                                    <a asp-action="Detail"
+                                       asp-route-employeeId="@item.EmployeeId"
+                                       class="btn btn-outline-primary"
+                                       onclick="event.stopPropagation();">View</a>
+                                    <a asp-action="Update"
+                                       asp-route-employeeId="@item.EmployeeId"
+                                       class="btn btn-outline-secondary"
+                                       onclick="event.stopPropagation();">Update</a>
+                                    <form asp-action="Delete"
+                                          asp-route-employeeId="@item.EmployeeId"
+                                          method="post"
+                                          onsubmit="return confirm('Are you sure you want to delete this employee?');"
+                                          onclick="event.stopPropagation();">
                                         <button type="submit" class="btn btn-outline-danger">Delete</button>
                                     </form>
                                 </div>
@@ -51,4 +67,19 @@ else
             </table>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.clickable-row').forEach(function (row) {
+                row.addEventListener('click', function () {
+                    const url = this.getAttribute('data-url');
+                    if (url) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    </script>
 }

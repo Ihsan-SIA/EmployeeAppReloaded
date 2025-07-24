@@ -1,60 +1,79 @@
 ﻿@model CreateEmployeeViewModel
 @{
-    ViewData["Title"] = "Add new Employee";
+    ViewData["Title"] = "Add New Employee";
 }
 
-<h1 class="text-primary mb-3">@ViewData["Title"]</h1>
-<hr />
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
 
-<div class="card shadow-sm p-4">
-    <form asp-action="Create" asp-controller="Employee" method="post">
-        <input type="hidden" asp-for="DepartmentId" />
+            <div class="card shadow-lg rounded-4 border-0">
+                <div class="card-body p-5">
+                    <h2 class="text-primary mb-4">
+                        <i class="bi bi-person-plus-fill me-2"></i> @ViewData["Title"]
+                    </h2>
+                    <hr />
 
-        <div class="mb-3">
-            <label asp-for="FirstName" class="form-label"></label>
-            <input asp-for="FirstName" class="form-control" />
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <form asp-action="Create" asp-controller="Employee" method="post">
+                        <input type="hidden" asp-for="DepartmentId" />
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label fw-semibold">First Name</label>
+                                <input asp-for="FirstName" class="form-control rounded-3 shadow-sm" placeholder="e.g. Amina" />
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label fw-semibold">Last Name</label>
+                                <input asp-for="LastName" class="form-control rounded-3 shadow-sm" placeholder="e.g. Bello" />
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label fw-semibold">Email Address</label>
+                            <input asp-for="Email" class="form-control rounded-3 shadow-sm" placeholder="example@domain.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label asp-for="Address.Street" class="form-label fw-semibold">Street Address</label>
+                                <input asp-for="Address.Street" class="form-control rounded-3 shadow-sm" placeholder="e.g. 12 Waziri Ibrahim Rd" />
+                                <span asp-validation-for="Address.Street" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Address.State" class="form-label fw-semibold">State</label>
+                                <select asp-for="Address.State" class="form-select rounded-3 shadow-sm" asp-items="Model.States">
+                                    <option value="">-- Select State --</option>
+                                </select>
+                                <span asp-validation-for="Address.State" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Salary" class="form-label fw-semibold">Salary (₦)</label>
+                                <input asp-for="Salary" class="form-control rounded-3 shadow-sm" step="0.01" placeholder="e.g. 250000" />
+                                <span asp-validation-for="Salary" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="HireDate" class="form-label fw-semibold">Hire Date</label>
+                                <input asp-for="HireDate" class="form-control rounded-3 shadow-sm" type="date" />
+                                <span asp-validation-for="HireDate" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success px-4 py-2 shadow-sm">
+                                <i class="bi bi-check-circle me-1"></i> Create Employee
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
         </div>
-
-        <div class="mb-3">
-            <label asp-for="LastName" class="form-label"></label>
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Email" class="form-label"></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Address.Street" class="control-label"></label>
-            <input asp-for="Address.Street" class="form-control" />
-            <span asp-validation-for="Address.Street" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Address.State" class="control-label"></label>
-            <select asp-for="Address.State" class="form-control" asp-items="Model.States">
-                <option value="">-- Select State --</option>
-            </select>
-            <span asp-validation-for="Address.State" class="text-danger"></span>
-        </div>
-
-
-        <div class="mb-3">
-            <label asp-for="Salary" class="form-label"></label>
-            <input asp-for="Salary" class="form-control" step=".01" />
-            <span asp-validation-for="Salary" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="HireDate" class="form-label"></label>
-            <input asp-for="HireDate" class="form-control" />
-            <span asp-validation-for="HireDate" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Create Employee</button>
-    </form>
+    </div>
 </div>
